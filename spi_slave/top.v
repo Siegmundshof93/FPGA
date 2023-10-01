@@ -15,7 +15,7 @@ reg [2:0] rx_counter = 3'b0;
 reg rx_done = 1'b0;
 reg [7:0] tx_count = 8'd38;
 //reg tx_ready = 1'b0;
-reg [39:0] tx_byte = 39'h5925A2B07F;
+reg [39:0] tx_byte = 39'h5925A2B012;
 
  reg r_SPI_MISO_Bit;
 reg r_Preload_MISO;
@@ -69,6 +69,7 @@ end // end always function
 
 
 always @ (posedge i_SPI_CLK or posedge i_SPI_CS)
+begin
 if(~i_SPI_CS)
   begin
   tx_count <= tx_count - 1;
@@ -78,10 +79,7 @@ if(~i_SPI_CS)
     begin
       tx_count <= 8'd38;
     end
-
-
-
-
+end
 
 
 

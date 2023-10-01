@@ -1,0 +1,27 @@
+
+# systemclock
+set_io		clk_12MHz	         21
+
+#input ground pins
+set_io    gateOne            44
+set_io    gateTwo            45
+set_io    gateThree          47
+
+#frequency input
+set_io    freq_in            48
+
+
+#leds
+set_io              led[0]  99
+set_io              led[1]  98
+set_io              led[2]  97
+set_io              led[3]  96
+
+#output for the 7 segmends LED
+set_io    segment[0]         78 #14 -- A
+set_io    segment[1]         79 #16 -- B
+set_io    segment[2]         80 #13 -- C
+set_io    segment[3]         81 # 3 -- D
+set_io    segment[4]         87 # 5 -- E
+set_io    segment[5]         88 #11 -- F
+set_io    segment[6]         90 #15 -- G
