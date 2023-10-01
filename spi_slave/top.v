@@ -5,12 +5,7 @@ input clk_12MHz,
 input i_SPI_MOSI,
 input i_SPI_CLK,
 input i_SPI_CS,
-output reg o_SPI_MISO,
-
-output reg led_0,
-output reg led_1,
-output reg led_2,
-output reg led_3
+output reg o_SPI_MISO
 
 );
 
@@ -18,11 +13,11 @@ reg [7:0] rx_byte_tp = 8'b0;
 reg [7:0] rx_byte = 8'b0;
 reg [2:0] rx_counter = 3'b0;
 reg rx_done = 1'b0;
-reg [15:0] tx_count = 16'd22;
+reg [7:0] tx_count = 8'd38;
 //reg tx_ready = 1'b0;
-reg [15:0] tx_byte = 16'h815A;
+reg [39:0] tx_byte = 39'h5925A2B07F;
 
-reg r_SPI_MISO_Bit;
+ reg r_SPI_MISO_Bit;
 reg r_Preload_MISO;
 
 wire SPI_MISO_Mux;
@@ -59,37 +54,41 @@ end // end always function
 //end
 
 
-// always @(posedge w_SPI_Clk or posedge i_SPI_CS_n)
-// begin
-//  if (i_SPI_CS_n)
+ //always @(posedge i_SPI_CLK or posedge i_SPI_CS)
+ //begin
+//  if (i_SPI_CS)
 //  begin
 //    r_Preload_MISO <= 1'b1;
 //  end
 //  else
-//  begin
+// begin
 //    r_Preload_MISO <= 1'b0;
 //  end
 // end
 
 
 
-always @ (posedge i_SPI_CLK)
- begin
-  if(~i_SPI_CS & rx_done)
-    begin
-        tx_count <= tx_count - 1;
-        o_SPI_MISO <= tx_byte[tx_count];
-      end
+always @ (posedge i_SPI_CLK or posedge i_SPI_CS)
+if(~i_SPI_CS)
+  begin
+  tx_count <= tx_count - 1;
+  o_SPI_MISO <= tx_byte[tx_count];
+  end
   else
     begin
-      tx_count <= 16'd22;
+      tx_count <= 8'd38;
     end
-end
-
-// assign w_SPI_MISO_Mux = r_Preload_MISO ? r_TX_Byte[3'b110] : r_SPI_MISO_Bit;
 
 
-// assign o_SPI_MISO = i_SPI_CS ? 1'bZ : w_SPI_MISO_Mux;
+
+
+
+
+
+// assign w_SPI_MISO_Mux = r_Preload_MISO ? tx_byte[7] : r_SPI_MISO_Bit;
+
+
+ //assign o_SPI_MISO = i_SPI_CS ? 1'bZ : w_SPI_MISO_Mux;
 
 
 

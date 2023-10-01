@@ -7,10 +7,3 @@ set_io    i_SPI_MOSI             90
 set_io    i_SPI_CLK              80
 set_io    i_SPI_CS               91
 set_io    o_SPI_MISO             81
-
-
-#leds
-set_io              led_0  99
-set_io              led_1  98
-set_io              led_2  97
-set_io              led_3  96
