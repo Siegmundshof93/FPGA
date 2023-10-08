@@ -1,0 +1,23 @@
+
+# systemclock
+set_io		clk_12MHz	         21
+
+
+
+#frequency input
+set_io    freq_in            48
+
+
+#leds
+#set_io              led[0]  99
+#set_io              led[1]  98
+#set_io              led[2]  97
+#set_io              led[3]  96
+
+
+
+# spi interface pinout
+set_io    i_SPI_MOSI             90
+set_io    i_SPI_CLK              80
+set_io    i_SPI_CS               91
+set_io    o_SPI_MISO             81
