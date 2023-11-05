@@ -4,7 +4,8 @@ input [39:0] tx_byte,
 input i_SPI_MOSI,
 input i_SPI_CLK,
 input i_SPI_CS,
-output reg o_SPI_MISO
+output reg o_SPI_MISO,
+output reg led
 
 );
 
@@ -12,10 +13,7 @@ reg [7:0] rx_byte_tp = 8'b0;
 reg [7:0] rx_byte = 8'b0;
 reg [2:0] rx_counter = 3'b0;
 reg rx_done = 1'b0;
-reg [7:0] tx_count = 8'd38;
-
-
-
+reg [7:0] tx_count = 8'd46;
 
 
 
@@ -40,33 +38,30 @@ begin
     begin
       rx_counter <= 3'b0;
     rx_byte_tp <= 8'b0;
-      rx_done <= 1'b0;
+    
 
     end // end positive CS
-end // end always function
-
-
-
-
-
+end
 
 
 
 
 always @ (posedge i_SPI_CLK or posedge i_SPI_CS)
-begin
-if(~i_SPI_CS)
   begin
-  tx_count <= tx_count - 1;
-  o_SPI_MISO <= tx_byte[tx_count];
-  end
+
+if(~i_SPI_CS)
+
+    begin
+    o_SPI_MISO <= rx_byte[tx_count];
+    tx_count <= tx_count - 1;
+    end
   else
     begin
-      tx_count <= 8'd38;
-    end
-end
-
-
+      tx_count <= 8'd46;
+    
+    
+      end
+end // end always function
 
 
 
