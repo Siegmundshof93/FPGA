@@ -1,4 +1,4 @@
-module freq_measure
+module freq_measure1
 
 (
 input input_signal,
