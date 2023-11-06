@@ -9,7 +9,7 @@ input  freq_etalon,
 input i_SPI_CLK,
 input i_SPI_CS,
 input i_SPI_MOSI,
-output o_SPI_MISO,
+output o_SPI_MISO
 );
 
 reg [39:0] test1 = 40'h0102030405;
@@ -21,7 +21,8 @@ wire clk_72MHz;
 
 
 wire [39:0] counter_not;
-wire [39:0] counter_etalon;
+wire [39:0] Nx;
+wire [39:0] Ns;
 
 
 pll p1
@@ -34,10 +35,10 @@ freq_measure1 f1
 (freq_not, clk_1Hz, counter_not);
 
 freq_measure2 f2
-(freq_etalon, clk_1Hz, counter_etalon);
+(freq_etalon, clk_72MHz, clk_1Hz, Nx, Ns);
 
 slave_spi s1
-(counter_not, counter_etalon, i_SPI_MOSI, i_SPI_CLK, i_SPI_CS, o_SPI_MISO);
+(Nx, Ns, i_SPI_MOSI, i_SPI_CLK, i_SPI_CS, o_SPI_MISO);
 
 
 endmodule

@@ -1,36 +1,67 @@
+//equal Presision Frequency Method based on FPGA
 module freq_measure2
 
 (
-input input_signal,
-input period,
-//input sample,
-//input reference,
-output reg [39:0] counter_out
-//output reg led
+
+input sample,
+input reference,
+input gate,
+output reg [39:0] Nx,
+output reg [39:0] Ns
+
 );
 
-reg [39:0] counter;
-//reg [39:0] sample_div_counter;
-//reg gate_sample;
-always @ (posedge input_signal)
-begin
-  if(period == 1'b1)
+reg [39:0] Nx_counter;
+reg [39:0] Ns_counter;
+reg gate_sync;
+
+
+always @ (posedge sample)
+  begin
+  if(gate)
     begin
-      counter <= counter + 1;
+      gate_sync <= 1'b1;
     end
-  else if(period == 1'b0)
+  else
     begin
-      counter <= 40'b0;
+      gate_sync <= 1'b0;
+    end
+
+  end
+
+
+ always @ (posedge reference)
+ begin
+  if(gate_sync == 1'b1)
+    begin
+      Ns_counter <= Ns_counter + 1;
+    end 
+  else
+    begin
+      Ns_counter <= 40'b0;
     end
 end
 
 
-
-always @(negedge period)
-begin
-  if (counter > 40'b0)
+ always @ (posedge sample)
+ begin
+  if(gate_sync == 1'b1)
     begin
-      counter_out <= counter;
+      Nx_counter <= Nx_counter + 1;
+
+    end 
+  else
+    begin
+      Nx_counter <= 40'b0;
+    end
+end
+
+always @ (negedge gate_sync)
+begin
+  if(Nx_counter > 40'b0)
+    begin
+      Nx <= Nx_counter;
+      Ns <= Ns_counter;
     end
 end
 
