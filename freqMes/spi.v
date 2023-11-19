@@ -1,7 +1,10 @@
 module slave_spi
 (
-input [39:0] tx_byte1,
-input [39:0] tx_byte2,
+input [39:0] tx_byte1_A,
+input [39:0] tx_byte1_B,
+input [39:0] tx_byte1_C,
+
+
 input i_SPI_MOSI,
 input i_SPI_CLK,
 input i_SPI_CS,
@@ -15,8 +18,8 @@ reg [7:0] rx_byte = 8'b0;
 reg [2:0] rx_counter = 3'b0;
 reg rx_done = 1'b0;
 reg [7:0] tx_count = 8'd46;
-
 reg [39:0] tx_byte = 40'b0;
+
 
 
 
@@ -44,15 +47,21 @@ begin
     end // end positive CS
 end
 
-always @(posedge i_SPI_CLK) begin
+always @(posedge i_SPI_CLK) 
+begin
   if(rx_byte == 8'd1)
     begin
-      tx_byte <= tx_byte1;    
+      tx_byte <= tx_byte1_A;    
     end
   else if(rx_byte == 8'd2)
     begin
-      tx_byte <= tx_byte2;
+      tx_byte <= tx_byte1_B;
     end
+  else if(rx_byte == 8'h10)
+    begin
+      tx_byte <= tx_byte1_C;
+    end
+  
 end
 
 

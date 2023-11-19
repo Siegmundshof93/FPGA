@@ -6,14 +6,14 @@ input clk,
 output reg d_clk
 );
 
- reg [25:0] count = 26'b0;
- reg [25:0] COUNT_MAX = 26'd48000000;
+ reg [26:0] count = 27'b0;
+ reg [26:0] COUNT_MAX = 27'd72000000;
 
 always @ (posedge clk)
 begin
  if(count == COUNT_MAX)
     begin
-      count <= 26'b0;
+      count <= 27'b0;
       d_clk <= ~d_clk;
     end
     else

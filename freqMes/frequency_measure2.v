@@ -1,3 +1,4 @@
+
 //equal Presision Frequency Method based on FPGA
 module freq_measure2
 
@@ -16,6 +17,7 @@ reg [39:0] Ns_counter;
 reg gate_sync;
 
 
+
 always @ (posedge sample)
   begin
   if(gate)
@@ -26,7 +28,6 @@ always @ (posedge sample)
     begin
       gate_sync <= 1'b0;
     end
-
   end
 
 
@@ -64,5 +65,7 @@ begin
       Ns <= Ns_counter;
     end
 end
+
+
 
 endmodule
