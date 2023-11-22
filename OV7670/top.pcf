@@ -1,0 +1,12 @@
+# systemclock
+set_io		clk_12MHz	         21
+
+#start
+set_io   -pullup yes   start   138
+
+#frequency input
+set_io    SDA        141
+set_io    SCL        139
+
+#leds
+set_io              led1  144
